@@ -27,7 +27,7 @@ export class DeclarationIsCreateComponent implements OnInit {
       return this.service.save(this.ice, this.annee, etat).subscribe(data => {
         console.log(data);
         if (data > 0){
-          this.object == new DeclarationIsObject();
+          this.object = null;
         }
       });
   }

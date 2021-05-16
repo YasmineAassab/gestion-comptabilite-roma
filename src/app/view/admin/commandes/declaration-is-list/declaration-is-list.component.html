@@ -73,7 +73,7 @@
                     <tr>
                         <td colspan="10" style="padding: 13px 200px">
                             <div class="p-p-3">
-                                <p-table [value]="declarationIS.factures" dataKey="id">
+                                <p-table [value]="declarationIS.factures" dataKey="id" [rows]="3" [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
                                     <ng-template pTemplate="header">
                                         <tr>
                                             <th pSortableColumn="ref">Reference <p-sortIcon field="ref"></p-sortIcon></th>

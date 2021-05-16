@@ -144,6 +144,11 @@ import { CommandesComponent } from './view/admin/commandes/commandes.component';
 import { CommandeListComponent } from './view/admin/commandes/commande-list/commande-list.component';
 import { CommandeEditComponent } from './view/admin/commandes/commande-edit/commande-edit.component';
 import { CommandeViewComponent } from './view/admin/commandes/commande-view/commande-view.component';
+import { DeclarationIsListComponent } from './view/admin/commandes/declaration-is-list/declaration-is-list.component';
+import {ConfirmationService, MessageService} from "primeng/api";
+import { DeclarationIsCreateComponent } from './view/admin/commandes/declaration-is-create/declaration-is-create.component';
+import { DeclarationIsEditComponent } from './view/admin/commandes/declaration-is-edit/declaration-is-edit.component';
+import { DeclarationIsViewComponent } from './view/admin/commandes/declaration-is-view/declaration-is-view.component';
 
 @NgModule({
     imports: [
@@ -282,12 +287,17 @@ import { CommandeViewComponent } from './view/admin/commandes/commande-view/comm
         CommandesComponent,
         CommandeListComponent,
         CommandeEditComponent,
-        CommandeViewComponent
+        CommandeViewComponent,
+        DeclarationIsListComponent,
+        DeclarationIsCreateComponent,
+        DeclarationIsEditComponent,
+        DeclarationIsViewComponent,
+
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},
         CountryService, CustomerService, EventService, IconService, NodeService,
-        PhotoService, ProductService, MenuService
+        PhotoService, ProductService, MenuService, MessageService, ConfirmationService,
     ],
     bootstrap: [AppComponent]
 })

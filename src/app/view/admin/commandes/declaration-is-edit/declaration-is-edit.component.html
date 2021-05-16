@@ -1,0 +1,25 @@
+<p-dialog [(visible)]="editDialog" [style]="{width: '450px'}" header="Commande Edit" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="annee">Année</label>
+            <input type="text" pInputText id="annee" [(ngModel)]="selected.annee" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !selected.annee">année is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="societe">Société</label>
+            <input type="text" pInputText id="societe" placeholder="ICE" [(ngModel)]="selected.societe.ice" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !selected.societe">societe is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="etatDeclaration">État</label>
+            <input type="text" pInputText id="etatDeclaration" [(ngModel)]="selected.etatDeclaration.libelle" required autofocus />
+            <small class="p-invalid" *ngIf="submitted && !selected.societe">etat is required.</small>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideEditDialog()"></button>
+        <button pButton pRipple label="Edit" icon="pi pi-check" class="p-button-text" (click)="edit()"></button>
+    </ng-template>
+</p-dialog>

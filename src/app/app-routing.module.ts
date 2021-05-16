@@ -38,6 +38,7 @@ import {AppErrorComponent} from './pages/app.error.component';
 import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
 import {AppLoginComponent} from './pages/app.login.component';
 import {CommandesComponent} from './view/admin/commandes/commandes.component';
+import {DeclarationIsCreateComponent} from "./view/admin/commandes/declaration-is-create/declaration-is-create.component";
 
 @NgModule({
     imports: [
@@ -47,6 +48,7 @@ import {CommandesComponent} from './view/admin/commandes/commandes.component';
                 children: [
                     {path: '', component: DashboardDemoComponent},
                     {path: 'view/commande', component: CommandesComponent},
+                    {path: 'view/declaration-is/create', component: DeclarationIsCreateComponent},
                     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
                     {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},

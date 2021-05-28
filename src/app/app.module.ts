@@ -139,16 +139,21 @@ import {CustomerService} from './demo/service/customerservice';
 import {PhotoService} from './demo/service/photoservice';
 import {ProductService} from './demo/service/productservice';
 import {IconService} from './demo/service/iconservice';
+/*
 import { CommandeCreateComponent } from './view/admin/commandes/commande-create/commande-create.component';
 import { CommandesComponent } from './view/admin/commandes/commandes.component';
 import { CommandeListComponent } from './view/admin/commandes/commande-list/commande-list.component';
 import { CommandeEditComponent } from './view/admin/commandes/commande-edit/commande-edit.component';
 import { CommandeViewComponent } from './view/admin/commandes/commande-view/commande-view.component';
-import { DeclarationIsListComponent } from './view/admin/commandes/declaration-is-list/declaration-is-list.component';
+*/
+import { DeclarationIsListComponent } from './view/admin/declarations-is/declaration-is-list/declaration-is-list.component';
 import {ConfirmationService, MessageService} from "primeng/api";
-import { DeclarationIsCreateComponent } from './view/admin/commandes/declaration-is-create/declaration-is-create.component';
-import { DeclarationIsEditComponent } from './view/admin/commandes/declaration-is-edit/declaration-is-edit.component';
-import { DeclarationIsViewComponent } from './view/admin/commandes/declaration-is-view/declaration-is-view.component';
+import { DeclarationIsCreateComponent } from './view/admin/declarations-is/declaration-is-create/declaration-is-create.component';
+import { DeclarationIsEditComponent } from './view/admin/declarations-is/declaration-is-edit/declaration-is-edit.component';
+import { DeclarationIsViewComponent } from './view/admin/declarations-is/declaration-is-view/declaration-is-view.component';
+import { FactureDialogComponent } from './view/admin/declarations-is/facture-dialog/facture-dialog.component';
+import { ViewFactureComponent } from './view/admin/declarations-is/view-facture/view-facture.component';
+import { DeclarationsISComponent } from './view/admin/declarations-is/declarations-is.component';
 
 @NgModule({
     imports: [
@@ -283,15 +288,14 @@ import { DeclarationIsViewComponent } from './view/admin/commandes/declaration-i
         AppErrorComponent,
         AppAccessdeniedComponent,
         AppLoginComponent,
-        CommandeCreateComponent,
-        CommandesComponent,
-        CommandeListComponent,
-        CommandeEditComponent,
-        CommandeViewComponent,
+
         DeclarationIsListComponent,
         DeclarationIsCreateComponent,
         DeclarationIsEditComponent,
         DeclarationIsViewComponent,
+        FactureDialogComponent,
+        ViewFactureComponent,
+        DeclarationsISComponent,
 
     ],
     providers: [

@@ -1,0 +1,259 @@
+<div class="card">
+
+    <p-toast></p-toast>
+    <p-toast position="top-left" key="tl"></p-toast>
+
+    <h3>Edit declaration IS</h3>
+    <p-tabView>
+        <p-tabPanel header="Declaration IS">
+            <div class="p-grid">
+
+                <div class="p-col-2 p-offset-3">
+                    <div style="padding: 5px"><label>Société</label></div>
+                    <input pInputText [(ngModel)]="selected.societe.ice">
+                </div>
+                <div class="p-col-2">
+                    <div style="padding: 5px"><label>Année</label></div>
+                    <p-inputNumber [(ngModel)]="selected.annee" mode="decimal" inputId="withoutgrouping" [useGrouping]="false"></p-inputNumber>
+                </div>
+                <div class="p-col-2">
+                    <div style="padding: 5px"><label>État</label></div>
+                    <p-dropdown [options]="etat" [(ngModel)]="selected.etatDeclaration.libelle" editable="true" [showClear]="true"></p-dropdown>
+                </div>
+
+
+                <div class="p-col-12">
+                    <div class="p-grid" style="padding-top: 40px">
+                        <div class="p-col-2 p-offset-4">
+                            <div style="padding: 5px"><label>Total gain</label></div>
+                            <p-inputNumber [(ngModel)]="selected.totalHTGain" disabled mode="currency" currency="MAD"></p-inputNumber>
+                        </div>
+                        <div class="p-col-6">
+                            <div style="padding: 5px"><label>Total charge</label></div>
+                            <p-inputNumber [(ngModel)]="selected.totalHTCharge" disabled mode="currency" currency="MAD"></p-inputNumber>
+                        </div>
+                        <div class="p-col p-offset-1">
+                            <div style="padding: 5px"><label>Résultat fiscal</label></div>
+                            <p-inputNumber [(ngModel)]="selected.totalHTDiff" disabled mode="currency" currency="MAD"></p-inputNumber>
+                        </div>
+                        <div class="p-col">
+                            <div style="padding: 5px"><label>Montant calculé</label></div>
+                            <p-inputNumber [(ngModel)]="selected.montantISCalcule" disabled mode="currency" currency="MAD"></p-inputNumber>
+                        </div>
+                        <div class="p-col-2">
+                            <div style="padding: 5px"><label>Taux appliqué</label></div>
+                            <p-inputNumber *ngIf="selected.tauxIS != null" [(ngModel)]="selected.tauxIS.pourcentage" disabled inputId="percent" prefix="%"></p-inputNumber>
+                            <span *ngIf="selected.tauxIS == null">aucun taux appliqué</span>
+                        </div>
+                        <div class="p-col">
+                            <div style="padding: 5px"><label>Cotisation minimale {{selected.annee}}</label></div>
+                            <p-inputNumber [(ngModel)]="selected.tauxIsConfig.cotisationMinimale" disabled mode="currency" currency="MAD"></p-inputNumber>
+                        </div>
+                        <div class="p-col">
+                            <div style="padding: 5px"><label>Montant payé</label></div>
+                            <p-inputNumber [(ngModel)]="selected.montantISPaye" disabled mode="currency" currency="MAD"></p-inputNumber>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="p-col-12">
+                    <button pButton pRipple type="button" label="MODIFIER" style="width:20rem" class="p-offset-5 p-mr-6 p-mb-2 p-button-warning" (click)="edit(selected)"></button>
+                </div>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Factures">
+            <div class="card" style="min-height: 750px">
+                <p-table #dt2 [value]="selected.factures" dataKey="id"
+                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50]" styleClass="p-datatable-customers"
+                         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         [globalFilterFields]="['ref','libelle','societeSource','societeDestination','dateOperation','montantHorsTaxe','typeOperation']">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex">
+                            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2" (click)="openCreate()"></button>
+                            <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Reference</th>
+                            <th>Libellé</th>
+                            <th>Societe source</th>
+                            <th>Societe destination</th>
+                            <th>Date opération</th>
+                            <th>Montant hors taxe</th>
+                            <th>Type opération</th>
+                            <th></th>
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-facture>
+                        <tr>
+                            <td>
+                                {{facture.ref}}
+                            </td>
+                            <td>
+                                {{facture.libelle}}
+                            </td>
+                            <td>
+                                {{facture.societeSource.ice}}
+                            </td>
+                            <td>
+                                {{facture.societeDistination.ice}}
+                            </td>
+                            <td>
+                                {{facture.dateOperation | date: 'MM/dd/yyyy'}}
+                            </td>
+                            <td>
+                                {{facture.montantHorsTaxe | currency: 'MAD&nbsp;'}}
+                            </td>
+                            <td>
+                                <span [class]="'customer-badge status-' + facture.typeOperation">{{facture.typeOperation}}</span>
+                            </td>
+                            <td>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"></button>
+                                <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No customers found.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+<!--
+
+    <div class="p-grid">
+
+        <div class="p-col-12">
+            <h3>Declaration IS edit</h3>
+        </div>
+        <div class="p-col-2 p-offset-3">
+            <div style="padding: 5px"><label>Société</label></div>
+            <input pInputText [(ngModel)]="selected.societe.ice">
+        </div>
+        <div class="p-col-2">
+            <div style="padding: 5px"><label>Année</label></div>
+            <p-inputNumber [(ngModel)]="selected.annee" mode="decimal" inputId="withoutgrouping" [useGrouping]="false"></p-inputNumber>
+        </div>
+        <div class="p-col-2">
+            <div style="padding: 5px"><label>État</label></div>
+            <p-dropdown [options]="etat" [(ngModel)]="selected.etatDeclaration.libelle" editable="true" [showClear]="true"></p-dropdown>
+        </div>
+
+
+        <div class="p-col-12">
+            <div class="p-grid" style="padding-top: 50px">
+                <div class="p-col-2 p-offset-4">
+                    <div style="padding: 5px"><label>Total gain</label></div>
+                    <p-inputNumber [(ngModel)]="selected.totalHTGain" disabled mode="currency" currency="MAD"></p-inputNumber>
+                </div>
+                <div class="p-col-6">
+                    <div style="padding: 5px"><label>Total charge</label></div>
+                    <p-inputNumber [(ngModel)]="selected.totalHTCharge" disabled mode="currency" currency="MAD"></p-inputNumber>
+                </div>
+                <div class="p-col p-offset-1">
+                    <div style="padding: 5px"><label>Résultat fiscal</label></div>
+                    <p-inputNumber [(ngModel)]="selected.totalHTDiff" disabled mode="currency" currency="MAD"></p-inputNumber>
+                </div>
+                <div class="p-col">
+                    <div style="padding: 5px"><label>Montant calculé</label></div>
+                    <p-inputNumber [(ngModel)]="selected.montantISCalcule" disabled mode="currency" currency="MAD"></p-inputNumber>
+                </div>
+                <div class="p-col-2">
+                    <div style="padding: 5px"><label>Taux appliqué</label></div>
+                    <p-inputNumber *ngIf="selected.tauxIS != null" [(ngModel)]="selected.tauxIS.pourcentage" disabled inputId="percent" prefix="%"></p-inputNumber>
+                    <span *ngIf="selected.tauxIS == null">aucun taux appliqué</span>
+                </div>
+                <div class="p-col">
+                    <div style="padding: 5px"><label>Cotisation minimale {{selected.annee}}</label></div>
+                    <p-inputNumber [(ngModel)]="selected.tauxIsConfig.cotisationMinimale" disabled mode="currency" currency="MAD"></p-inputNumber>
+                </div>
+                <div class="p-col">
+                    <div style="padding: 5px"><label>Montant payé</label></div>
+                    <p-inputNumber [(ngModel)]="selected.montantISPaye" disabled mode="currency" currency="MAD"></p-inputNumber>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="p-col-12">
+            <div class="card" style="min-height: 750px">
+                <p-table #dt2 [value]="selected.factures" dataKey="id"
+                         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50]" styleClass="p-datatable-customers"
+                         [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                         [globalFilterFields]="['ref','libelle','societeSource','societeDestination','dateOperation','montantHorsTaxe','typeOperation']">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex">
+                            <h5 class="p-m-0">Factures</h5><span><button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2" (click)="openCreate()"></button></span>
+                            <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Reference</th>
+                            <th>Libellé</th>
+                            <th>Societe source</th>
+                            <th>Societe destination</th>
+                            <th>Date opération</th>
+                            <th>Montant hors taxe</th>
+                            <th>Type opération</th>
+                            <th></th>
+                        </tr>
+
+                    </ng-template>
+                    <ng-template pTemplate="body" let-facture>
+                        <tr>
+                            <td>
+                                {{facture.ref}}
+                            </td>
+                            <td>
+                                {{facture.libelle}}
+                            </td>
+                            <td>
+                                {{facture.societeSource.ice}}
+                            </td>
+                            <td>
+                                {{facture.societeDistination.ice}}
+                            </td>
+                            <td>
+                                {{facture.dateOperation | date: 'MM/dd/yyyy'}}
+                            </td>
+                            <td>
+                                {{facture.montantHorsTaxe | currency: 'MAD&nbsp;'}}
+                            </td>
+                            <td>
+                                <span [class]="'customer-badge status-' + facture.typeOperation">{{facture.typeOperation}}</span>
+                            </td>
+                            <td>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"></button>
+                                <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="8">No customers found.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="p-col-12">
+            <button pButton pRipple type="button" label="MODIFIER" style="width:20rem" class="p-offset-5 p-mr-6 p-mb-2 p-button-warning" (click)="edit(selected)"></button>
+        </div>
+    </div>-->
+    <app-facture-dialog></app-facture-dialog>
+</div>

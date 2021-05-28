@@ -79,9 +79,9 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Pages', icon: 'pi pi-fw pi-copy', routerLink: ['/pages'],
                 items: [
-                    {label: 'Commande', icon: 'pi pi-fw pi-pencil', routerLink: ['/view/commande']},
-                    //{label: 'Create DeclarationIS', icon: 'pi pi-fw pi-plus', routerLink: ['/view/declaration-is/create']},
-                    //{label: 'Edit DeclarationIS', icon: 'pi pi-fw pi-pencil', routerLink: ['/view/declaration-is/edit']},
+                    {label: 'DeclarationIS', icon: 'pi pi-fw pi-pencil', routerLink: ['/view/declarationIS']},
+                    //{label: 'Create DeclarationIS', icon: 'pi pi-fw pi-plus', routerLink: ['/view/declarations-is/create']},
+                    //{label: 'Edit DeclarationIS', icon: 'pi pi-fw pi-pencil', routerLink: ['/view/declarations-is/edit']},
                     {label: 'Crud', icon: 'pi pi-fw pi-pencil', routerLink: ['/pages/crud']},
                     {label: 'Calendar', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/pages/calendar']},
                     {label: 'Timeline', icon: 'pi pi-fw pi-calendar', routerLink: ['/pages/timeline']},

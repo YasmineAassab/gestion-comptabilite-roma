@@ -1,0 +1,98 @@
+<p-dialog [(visible)]="createDialog" [style]="{width: '490px'}" header="Facture create" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-grid">
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="ref">Reference</label>
+                    <input type="text" pInputText id="ref" [(ngModel)]="selectedFact.ref" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.ref">ref is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="libelle">Libelle</label>
+                    <input type="text" pInputText id="libelle" [(ngModel)]="selectedFact.libelle" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.libelle">libelle is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="dateOperation">Date opération</label>
+                    <input type="date" pInputText id="dateOperation" [(ngModel)]="selectedFact.dateOperation" required autofocus />
+                    <!--<p-inputMask type="date" mask="99/99/9999" id="dateOperation" [(ngModel)]="selectedFact.dateOperation" placeholder="99/99/9999" slotChar="mm/dd/yyyy"></p-inputMask>-->
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.dateOperation">date operation is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                <label for="montantHorsTaxe">Montant hors taxe</label>
+               <!-- <input type="number" pInputText id="montantHorsTaxe" [(ngModel)]="selectedFact.montantHorsTaxe"  />-->
+                    <p-inputNumber id="montantHorsTaxe" [(ngModel)]="selectedFact.montantHorsTaxe" required autofocus></p-inputNumber>
+                <small class="p-invalid" *ngIf="submitted && !selectedFact.montantHorsTaxe">montant hors taxe is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="typeOperation">Type opération</label>
+                    <input type="text" pInputText id="typeOperation" [(ngModel)]="selectedFact.typeOperation" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.typeOperation">type operation is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="societeSource">Sté source</label>
+                    <input type="number" pInputText id="societeSource" disabled [(ngModel)]="selectedFact.societeSource.ice" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.societeSource.ice">societe source is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="societeDistination">Sté destination</label>
+                    <input type="text" pInputText id="societeDistination" placeholder="ice" [(ngModel)]="selectedFact.societeDistination.ice" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.societeDistination.ice">societe distination is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="tva">Tva</label>
+                    <input type="text" pInputText id="tva" placeholder="reference tva" [(ngModel)]="selectedFact.tva.ref" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.tva.ref"> tva is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="classComptable">Classe comptable</label>
+                    <input type="text" pInputText id="classComptable" placeholder="numero" [(ngModel)]="selectedFact.classComptable.numero" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.classComptable.numero"> classComptable is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="etatPaiement">État paiement</label>
+                    <input type="text" pInputText id="etatPaiement" placeholder="code" [(ngModel)]="selectedFact.etatPaiement.code" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.etatPaiement.code">etat paiement is required.</small>
+                </div>
+            </div>
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="etatFacture">État facture</label>
+                    <input type="text" pInputText id="etatFacture" placeholder="code" [(ngModel)]="selectedFact.etatFacture.code" required autofocus />
+                    <small class="p-invalid" *ngIf="submitted && !selectedFact.etatFacture.code">etat facture distination is required.</small>
+                </div>
+            </div>
+
+        </div>
+
+       <!-- <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="totalPaye">Total Paye</label>
+                <p-inputNumber id="totalPaye" [(ngModel)]="selectedFact.totalPaye"></p-inputNumber>
+            </div>
+        </div>-->
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideCreateDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveFact()"></button>
+    </ng-template>
+</p-dialog>

@@ -37,8 +37,10 @@ import {AppNotfoundComponent} from './pages/app.notfound.component';
 import {AppErrorComponent} from './pages/app.error.component';
 import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
 import {AppLoginComponent} from './pages/app.login.component';
-import {CommandesComponent} from './view/admin/commandes/commandes.component';
-import {DeclarationIsCreateComponent} from "./view/admin/commandes/declaration-is-create/declaration-is-create.component";
+//import {CommandesComponent} from './view/admin/commandes/commandes.component';
+import {DeclarationIsCreateComponent} from "./view/admin/declarations-is/declaration-is-create/declaration-is-create.component";
+import {DeclarationIsEditComponent} from "./view/admin/declarations-is/declaration-is-edit/declaration-is-edit.component";
+import {DeclarationsISComponent} from "./view/admin/declarations-is/declarations-is.component";
 
 @NgModule({
     imports: [
@@ -47,8 +49,9 @@ import {DeclarationIsCreateComponent} from "./view/admin/commandes/declaration-i
                 path: '', component: AppMainComponent,
                 children: [
                     {path: '', component: DashboardDemoComponent},
-                    {path: 'view/commande', component: CommandesComponent},
-                    {path: 'view/declaration-is/create', component: DeclarationIsCreateComponent},
+                    {path: 'view/declarationIS', component: DeclarationsISComponent},
+                    {path: 'view/declarations-is/create', component: DeclarationIsCreateComponent},
+                    {path: 'view/declarations-is/edit', component: DeclarationIsEditComponent},
                     {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
                     {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
                     {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},

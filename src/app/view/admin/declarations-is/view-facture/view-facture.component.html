@@ -1,0 +1,103 @@
+<p-dialog [(visible)]="viewDialog2" [style]="{width: '450px', height: '1000px'}" header="Facture Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-grid">
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="ref">Reference</label>
+                    <input type="text" pInputText id="ref" [(ngModel)]="selectedFact.ref" disabled />
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="annee">Libellé</label>
+                    <input type="text" pInputText id="annee" [(ngModel)]="selectedFact.libelle" disabled />
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="dateOperation">Date opération</label>
+                    <input type="text" pInputText id="dateOperation" [(ngModel)]="selectedFact.dateOperation" disabled />
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="typeOperation">Type opération</label>
+                    <input type="text" pInputText id="typeOperation" [(ngModel)]="selectedFact.typeOperation" disabled />
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                <label for="montantHorsTaxe">Montant hors taxe</label>
+                <p-inputNumber [(ngModel)]="selectedFact.montantHorsTaxe" inputId="locale-user" id="montantHorsTaxe" mode="currency" currency="MAD" [minFractionDigits]="2" disabled></p-inputNumber>
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="tva">TVA appliquée</label>
+                    <p-inputNumber id="tva" [(ngModel)]="selectedFact.tva.valeur" disabled inputId="percent" prefix="%"></p-inputNumber>
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="montantTVA">montant TVA </label>
+                    <p-inputNumber [(ngModel)]="selectedFact.montantTVA" inputId="locale-user" id="montantTVA" mode="currency" currency="MAD" [minFractionDigits]="2" disabled></p-inputNumber>
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="montantTTC">Montant TTC </label>
+                    <p-inputNumber [(ngModel)]="selectedFact.montantTTC" inputId="locale-user" id="montantTTC" mode="currency" currency="MAD" [minFractionDigits]="2" disabled></p-inputNumber>
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="societeSource">Societe source</label>
+                    <input type="text" pInputText id="societeSource" [(ngModel)]="selectedFact.societeSource.ice" disabled />
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="societeDistination">Societe distination </label>
+                    <input type="text" pInputText id="societeDistination" [(ngModel)]="selectedFact.societeDistination.ice" disabled />
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="etatFacture">État facture </label>
+                    <input type="text" pInputText id="etatFacture" [(ngModel)]="selectedFact.etatFacture.libelle" disabled />
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="etatPaiement">État paiement </label>
+                    <input type="text" pInputText id="etatPaiement" [(ngModel)]="selectedFact.etatPaiement.libelle" disabled />
+                </div>
+            </div>
+
+            <div class="p-col-6">
+                <div class="p-field">
+                    <label for="classComptable">Classe comptable</label>
+                    <input type="text" pInputText id="classComptable" [(ngModel)]="selectedFact.classComptable.numero" disabled />
+                </div>
+            </div>
+
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Fermer" icon="pi pi-times" class="p-button-text" (click)="hideViewDialog()"></button>
+    </ng-template>
+</p-dialog>
+

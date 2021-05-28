@@ -16,6 +16,8 @@ export class DeclarationIS {
   public societe = new Societe();
   public tauxIS = new TauxIS();
   public tauxIsConfig = new TauxIsConfig();
-  public factures = new Array<Facture>();
   public etatDeclaration = new EtatDeclaration();
+  public factureD  = new Array<Facture>();
+  public factureC  = new Array<Facture>();
+  public factures  = new Array<Facture>();
 }

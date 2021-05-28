@@ -1,0 +1,250 @@
+<div class="p-grid">
+    <div class="p-col-12">
+
+        <p-toast></p-toast>
+
+        <div class="card">
+            <h4 style="margin: 10px">Recherche multi-critère</h4>
+                <div class="p-grid p-fluid">
+                    <div class="p-col-12  p-md-2 p-offset-1"><div style="margin-bottom: 5px"><label>Référence </label></div>
+                        <input type="text" pInputText placeholder="reference" [(ngModel)]="selectedVo.ref">
+                    </div>
+                    <div class="p-col-12  p-md-2"><div style="margin-bottom: 5px"><label>Année </label></div>
+                        <input type="text" pInputText placeholder="annee" [(ngModel)]="selectedVo.annee">
+                    </div>
+                    <div class="p-col-12  p-md-2"><div style="margin-bottom: 5px"><label>Société </label></div>
+                        <input type="text" pInputText placeholder="societe" [(ngModel)]="selectedVo.societe">
+                    </div>
+                    <div class="p-col-12  p-md-2"><div style="margin-bottom: 5px"><label>Année minimum </label></div>
+                        <input type="text" pInputText placeholder="annee maximum" [(ngModel)]="selectedVo.anneeMin">
+                    </div>
+                    <div class="p-col-12 p-md-2"><div style="margin-bottom: 5px"><label>Année maximum</label></div>
+                        <input type="text" pInputText placeholder="annee minimum" [(ngModel)]="selectedVo.anneeMax">
+                    </div>
+                </div>
+                <div style="margin: 15px"><button pButton pRipple type="button" label="Search" icon="pi pi-search" iconPos="right" style="width:20rem; height: 10px" class="p-col-6 p-mb-2 p-offset-5" (click)="searchCriteria()"></button></div>
+
+            <div>
+                <p-tabView>
+                    <p-tabPanel header="Declaration IS">
+                        <div>
+                            <p-toolbar styleClass="p-mb-4">
+                                <ng-template pTemplate="left">
+                                    <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2" (click)="navigateToCreate()"></button>
+                                    <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mb-2" (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length"></button>
+                                </ng-template>
+
+                                <ng-template pTemplate="right">
+                                    <!--<button type="button" pButton pRipple icon="pi pi-file-excel" class="p-button-success p-mr-2"  pTooltip="XLS" tooltipPosition="bottom"></button>
+                                    <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                                -->
+                                </ng-template>
+
+                            </p-toolbar>
+                            <p-table #dt [value]="items" [columns]="cols" [rows]="4" [paginator]="true" [globalFilterFields]="['reference','annee','societe', 'totalHTDiff','montantISCalcul','montantISPaye', 'etat declaration']"
+                                     [(selection)]="selectes" [rowHover]="true"
+                                     styleClass="p-datatable-customers"
+                                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" dataKey="id">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 3rem">
+                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                        </th>
+                                        <th pSortableColumn="reference">Reference <p-sortIcon field="reference"></p-sortIcon></th>
+                                        <th pSortableColumn="annee" style="width: 9rem">Année <p-sortIcon field="annee"></p-sortIcon></th>
+                                        <th pSortableColumn="societe" style="width: 10rem">Societe <p-sortIcon field="societe"></p-sortIcon></th>
+                                        <th pSortableColumn="totalHTDiff">Résultat fiscal <p-sortIcon field="totalHTDiff"></p-sortIcon></th>
+                                        <th pSortableColumn="montantISCalcule">Montant calculé <p-sortIcon field="montantISCalcule"></p-sortIcon></th>
+                                        <th pSortableColumn="montantISPaye">Montant payé <p-sortIcon field="montantISPaye"></p-sortIcon></th>
+                                        <th pSortableColumn="etatDeclaration" style="width: 7rem">État <p-sortIcon field="etatDeclaration"></p-sortIcon></th>
+                                        <th pSortableColumn="factures" style="width: 9rem">Factures<p-sortIcon field="factures"></p-sortIcon></th>
+                                        <th></th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-declarationIS let-expanded="expanded">
+                                    <tr>
+                                        <td>
+                                            <p-tableCheckbox [value]="declarationIS"></p-tableCheckbox>
+                                        </td>
+                                        <td>{{declarationIS.ref}}</td>
+                                        <td>{{declarationIS.annee}}</td>
+                                        <td>{{declarationIS.societe.ice}}</td>
+                                        <td>{{declarationIS.totalHTDiff | currency: 'MAD&nbsp;'}}</td>
+                                        <td>{{declarationIS.montantISCalcule | currency: 'MAD&nbsp;'}}</td>
+                                        <td>{{declarationIS.montantISPaye | currency: 'MAD&nbsp;'}}</td>
+                                        <td>{{declarationIS.etatDeclaration.libelle}}</td>
+                                        <td>
+                                            <button type="button" pButton pRipple [pRowToggler]="declarationIS" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-times' : 'pi pi-search'" (click)="findFactures(declarationIS)"></button>
+                                        </td>
+                                        <td>
+                                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-mr-2" (click)="navigateToEdit(declarationIS)"></button>
+                                            <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2" (click)="view(declarationIS)"></button>
+                                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2" (click)="delete(declarationIS)"></button>
+                                            <button pButton pRipple icon="pi pi-download" class="p-button-rounded p-button-help p-button-info" (click)="downloadXmlFile(declarationIS)"></button>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                            <ng-template pTemplate="summary">
+                                <div class="p-d-flex p-ai-center p-jc-between">
+                                    In total there are {{items ? items.length : 0 }} declarations IS.
+                                </div>
+                            </ng-template>
+                        </div>
+
+                    </p-tabPanel>
+                    <p-tabPanel header="Facture">
+                        <p-table [value]="selected.factures" dataKey="id" [rows]="3" [paginator]="true"
+                                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th pSortableColumn="ref" style="width: 10rem">Reference <p-sortIcon field="ref"></p-sortIcon></th>
+                                    <th pSortableColumn="montantHorsTaxe" style="width: 12rem">Montant HT <p-sortIcon field="montantHorsTaxe"></p-sortIcon></th>
+                                    <th pSortableColumn="dateOperation" style="width: 12rem">Date opération <p-sortIcon field="dateOperation"></p-sortIcon></th>
+                                    <th pSortableColumn="societeSource" style="width: 12rem">Societe Source<p-sortIcon field="societeSource"></p-sortIcon></th>
+                                    <th pSortableColumn="societeDestination" style="width: 14rem">Societe Destination<p-sortIcon field="societeDestination"></p-sortIcon></th>
+                                    <th pSortableColumn="typeOperation" style="width: 12rem">Type opération<p-sortIcon field="typeOperation"></p-sortIcon></th>
+                                    <th style="width: 4rem"></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-facture>
+                                <tr>
+                                    <td>{{facture.ref}}</td>
+                                    <td>{{facture.montantHorsTaxe | currency: 'MAD&nbsp;'}}</td>
+                                    <td>{{facture.dateOperation}}</td>
+                                    <td>{{facture.societeSource.ice}}</td>
+                                    <td>{{facture.societeDistination.ice}}</td>
+
+                                    <td><span id="typeOperation">{{facture.typeOperation}}</span></td>
+                                    <td><button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info" (click)="viewFact(facture)"></button></td>
+                                </tr>
+                            </ng-template>
+
+                        </p-table>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+
+
+        <!--    <div class="card">
+                <p-toolbar styleClass="p-mb-4">
+                    <ng-template pTemplate="left">
+                        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2 p-mb-2" (click)="navigateToCreate()"></button>
+                        <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger p-mb-2" (click)="deleteMultiple()" [disabled]="!selectes || !selectes.length"></button>
+                    </ng-template>
+
+                    <ng-template pTemplate="right">
+                        <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="p-mr-2 p-mb-2 p-d-inline-block"></p-fileUpload>
+                        <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help p-mb-2" (click)="dt.exportCSV()"></button>
+                    </ng-template>
+
+                </p-toolbar>
+
+                <p-table #dt [value]="items" [columns]="cols" [rows]="4" [paginator]="true" [globalFilterFields]="['reference','annee','societe', 'totalHTDiff','montantISCalcul','montantISPaye', 'etat declaration']"
+                             [(selection)]="selectes" [rowHover]="true"
+                             styleClass="p-datatable-customers"
+                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true" dataKey="id">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+                            <h5 class="p-m-0">Declarations IS</h5>
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input pInputText type="text"  placeholder="Search..." />
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 3rem">
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>
+                            <th pSortableColumn="reference">Reference <p-sortIcon field="reference"></p-sortIcon></th>
+                            <th pSortableColumn="annee" style="width: 9rem">Année <p-sortIcon field="annee"></p-sortIcon></th>
+                            <th pSortableColumn="societe" style="width: 10rem">Societe <p-sortIcon field="societe"></p-sortIcon></th>
+                            <th pSortableColumn="totalHTDiff">Résultat fiscal <p-sortIcon field="totalHTDiff"></p-sortIcon></th>
+                            <th pSortableColumn="montantISCalcule">Montant calculé <p-sortIcon field="montantISCalcule"></p-sortIcon></th>
+                            <th pSortableColumn="montantISPaye">Montant payé <p-sortIcon field="montantISPaye"></p-sortIcon></th>
+                            <th pSortableColumn="etatDeclaration" style="width: 7rem">État <p-sortIcon field="etatDeclaration"></p-sortIcon></th>
+                            <th pSortableColumn="factures" style="width: 9rem">Factures<p-sortIcon field="factures"></p-sortIcon></th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-declarationIS let-expanded="expanded">
+                        <tr>
+                            <td>
+                                <p-tableCheckbox [value]="declarationIS"></p-tableCheckbox>
+                            </td>
+                            <td>{{declarationIS.ref}}</td>
+                            <td>{{declarationIS.annee}}</td>
+                            <td>{{declarationIS.societe.ice}}</td>
+                            <td>{{declarationIS.totalHTDiff | currency: 'MAD&nbsp;'}}</td>
+                            <td>{{declarationIS.montantISCalcule | currency: 'MAD&nbsp;'}}</td>
+                            <td>{{declarationIS.montantISPaye | currency: 'MAD&nbsp;'}}</td>
+                            <td>{{declarationIS.etatDeclaration.libelle}}</td>
+                            <td>
+                                <button type="button" pButton pRipple [pRowToggler]="declarationIS" class="p-button-text p-button-rounded p-button-plain" [icon]="expanded ? 'pi pi-times' : 'pi pi-search'" (click)="findFactures(declarationIS)"></button>
+                            </td>
+                            <td>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-warning p-mr-2" (click)="navigateToEdit(declarationIS)"></button>
+                                <button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info p-mr-2" (click)="view(declarationIS)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2" (click)="delete(declarationIS)"></button>
+                                <button pButton pRipple icon="pi pi-download" class="p-button-rounded p-button-help p-button-info" (click)="downloadXmlFile(declarationIS)"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="rowexpansion" let-declarationIS>
+                        <tr>
+                            <td colspan="10" style="padding: 13px 200px">
+                                <div class="p-p-3">
+                                    <p-table [value]="declarationIS.factures" dataKey="id" [rows]="3" [paginator]="true"
+                                             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th pSortableColumn="ref" style="width: 10rem">Reference <p-sortIcon field="ref"></p-sortIcon></th>
+                                                <th pSortableColumn="montantHorsTaxe" style="width: 12rem">Montant HT <p-sortIcon field="montantHorsTaxe"></p-sortIcon></th>
+                                                <th pSortableColumn="dateOperation" style="width: 12rem">Date opération <p-sortIcon field="dateOperation"></p-sortIcon></th>
+                                                <th pSortableColumn="societeSource" style="width: 12rem">Societe Source<p-sortIcon field="societeSource"></p-sortIcon></th>
+                                                <th pSortableColumn="societeDestination" style="width: 14rem">Societe Destination<p-sortIcon field="societeDestination"></p-sortIcon></th>
+                                                <th pSortableColumn="typeOperation" style="width: 12rem">Type opération<p-sortIcon field="typeOperation"></p-sortIcon></th>
+                                                <th style="width: 4rem"></th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-facture>
+                                            <tr>
+                                                <td>{{facture.ref}}</td>
+                                                <td>{{facture.montantHorsTaxe | currency: 'MAD&nbsp;'}}</td>
+                                                <td>{{facture.dateOperation}}</td>
+                                                <td>{{facture.societeSource.ice}}</td>
+                                                <td>{{facture.societeDistination.ice}}</td>
+
+                                                <td><span id="typeOperation">{{facture.typeOperation}}</span></td>
+                                                <td><button pButton pRipple icon="pi pi-list" class="p-button-rounded p-button-info" (click)="viewFact(facture)"></button></td>
+                                            </tr>
+                                        </ng-template>
+
+                                    </p-table>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="summary">
+                        <div class="p-d-flex p-ai-center p-jc-between">
+                            In total there are {{items ? items.length : 0 }} declarations IS.
+                        </div>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    -->
+
+   <!-- <app-declarations-is-create></app-declarations-is-create>-->
+    <!--<app-declarations-is-edit></app-declarations-is-edit>-->
+    <app-declaration-is-view></app-declaration-is-view>
+    <app-view-facture></app-view-facture>
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div>
+</div>
+</div>
